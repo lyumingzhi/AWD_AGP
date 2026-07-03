@@ -1,0 +1,15 @@
+torch
+torchvision
+typing_extensions>=4.5
+numpy
+opencv-python
+kornia
+pandas
+scikit-image
+scipy
+Pillow
+tqdm
+matplotlib
+visdom
+gradio
+requests
