@@ -19,10 +19,10 @@ input_example.jpg
 *.ckpt
 *.tar
 *.tar.gz
-mask_RPN/checkpoints/*
-!mask_RPN/checkpoints/.gitkeep
-superpixel_fcn/pretrain_ckpt/*
-!superpixel_fcn/pretrain_ckpt/.gitkeep
+inpainting/AWD_AGP/mask_RPN/checkpoints/*
+!inpainting/AWD_AGP/mask_RPN/checkpoints/.gitkeep
+inpainting/AWD_AGP/superpixel_fcn/pretrain_ckpt/*
+!inpainting/AWD_AGP/superpixel_fcn/pretrain_ckpt/.gitkeep
 
 # Build artifacts
 build/

@@ -18,9 +18,9 @@ def load_models(opt):
     FcFnet = FcFnetAPI(dataset=opt.dataset, device='cuda', opt=opt)
     Matnet = MatAPI(opt)
 
-    WDModel = WDnet()
-    DBWEModel = DBWRnet()
-    SLBRModel = SLBRnet()
+    WDModel = WDnet(opt)
+    DBWEModel = DBWRnet(opt)
+    SLBRModel = SLBRnet(opt)
 
     RFRnet.eval()
     GMCNNnet.eval()

@@ -29,6 +29,17 @@ def get_args():
 
     parser.add_argument('--relative_mask_size', type=float, default=0.33)
 
+    parser.add_argument('--rfr_places2_checkpoint', type=str, default=None, help='path to RFR places2 checkpoint')
+    parser.add_argument('--generative_checkpoint', type=str, default=None, help='path to Generative Inpainting checkpoint')
+    parser.add_argument('--generative_config', type=str, default=None, help='path to Generative Inpainting config yaml')
+    parser.add_argument('--gmcnn_checkpoint_dir', type=str, default=None, help='directory containing GMCNN .pth checkpoints')
+    parser.add_argument('--gmcnn_config', type=str, default=None, help='path to GMCNN config yaml')
+    parser.add_argument('--edgeconnect_config', type=str, default=None, help='path to EdgeConnect pipeline_config.yml')
+    parser.add_argument('--mat_checkpoint', type=str, default=None, help='path to MAT checkpoint pkl')
+    parser.add_argument('--wdnet_checkpoint', type=str, default=None, help='path to WDNet generator checkpoint')
+    parser.add_argument('--dbwe_checkpoint', type=str, default=None, help='path to DBWE checkpoint')
+    parser.add_argument('--slbr_checkpoint', type=str, default=None, help='path to SLBR checkpoint')
+
     # ADMM
     parser.add_argument('--lr_e',type=float,default=0.02)
     parser.add_argument('--lr_g',type=float,default=0.1)

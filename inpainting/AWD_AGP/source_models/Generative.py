@@ -1,4 +1,5 @@
 import torch
+import os
 from inpainting.generative_inpainting_pytorch.trainer import Trainer
 import imageio
 import numpy as np
@@ -8,12 +9,13 @@ class Generative(torch.nn.Module):
     def __init__(self,model_path='inpainting/generative_inpainting_pytorch/torch_model.p',device='cuda',config='inpainting/generative_inpainting_pytorch/configs/config.yaml',dataset='celeba', opt=None):
 
         super(Generative,self).__init__()
-        config = get_config(config)
+        config_path = getattr(opt, 'generative_config', None) or os.environ.get('AWD_AGP_GENERATIVE_CONFIG') or config
+        config = get_config(config_path)
         if dataset=='places2':
-            model_path='inpainting/generative_inpainting_pytorch/chkpt/places2.pth'
-            # print(model_path)
+            model_path = getattr(opt, 'generative_checkpoint', None) or os.environ.get('AWD_AGP_GENERATIVE_CKPT') or 'inpainting/generative_inpainting_pytorch/chkpt/places2.pth'
             self.module=Trainer(config,FromTF=True)
         elif dataset=='celeba':
+            model_path = getattr(opt, 'generative_checkpoint', None) or os.environ.get('AWD_AGP_GENERATIVE_CKPT') or model_path
             self.module=Trainer(config,FromTF=False)
 
         self.opt=opt

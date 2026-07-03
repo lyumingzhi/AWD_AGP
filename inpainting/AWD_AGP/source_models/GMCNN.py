@@ -28,8 +28,9 @@ class GMCNNAPI(torch.nn.Module):
                 self.module.load_networks(getLatest(os.path.join(config.load_model_dir, '*.pth')))
                 print('Loading done.')
             if dataset=='places2':
-                print('Loading pretrained model from {}'.format('inpainting/inpainting_gmcnn/pytorch/chkpts/places2_rect/'))
-                self.module.load_networks(getLatest(os.path.join('inpainting/inpainting_gmcnn/pytorch/chkpts/places2_rect', '*.pth')))
+                checkpoint_dir = getattr(self.opt, 'gmcnn_checkpoint_dir', None) or os.environ.get('AWD_AGP_GMCNN_CKPT_DIR') or 'inpainting/inpainting_gmcnn/pytorch/chkpts/places2_rect'
+                print('Loading pretrained model from {}'.format(checkpoint_dir))
+                self.module.load_networks(getLatest(os.path.join(checkpoint_dir, '*.pth')))
                 print('Loading done.')
             # exit()
     #     print('inference',self.module.single_inference)
@@ -65,7 +66,8 @@ class GMCNNAPI(torch.nn.Module):
         return self.module.evaluate(*args,**kwargs)
 
     def load_Config(self):
-        config=GMCNNConfig('inpainting/inpainting_gmcnn/pytorch/options/config.yaml')
+        config_path = getattr(self.opt, 'gmcnn_config', None) or os.environ.get('AWD_AGP_GMCNN_CONFIG') or 'inpainting/inpainting_gmcnn/pytorch/options/config.yaml'
+        config=GMCNNConfig(config_path)
         config.data_file='./imgs/celebahq_256x256/'
         return config
 

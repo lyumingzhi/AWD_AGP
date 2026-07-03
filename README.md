@@ -6,18 +6,18 @@ This repository contains the core AWD-AGP attack code, model-adapter APIs, trans
 
 ## Repository Layout
 
-- `official_surrogate_generate_AE.py`: generate transferable adversarial examples with AWD-AGP.
-- `official_Attack.py`: attack objectives, perturbation optimization, integrated-gradient attribution, and AGP logic.
-- `official_transfer_attack.py`: transfer evaluation on inpainting-based removers.
-- `official_transfer_attack_for_wr.py`: transfer evaluation on blind watermark removers.
-- `official_evaluate.py`: metrics for inpainting-based removal results.
-- `official_evaluate_for_wr.py`: metrics for blind watermark-removal results.
-- `official_dataset.py`: dataset loading, watermark attachment, and mask handling.
-- `official_load_models.py`: central model-loader for inpainting and watermark-removal wrappers.
-- `official_utils.py`, `official_noise_func.py`: shared utility and perturbation modules.
-- `source_models/`: adapter APIs for RFR, GMCNN, EdgeConnect, CR-Fill, Generative Inpainting, FcF, MAT, WDNet, DBWE, and SLBR.
-- `mask_RPN/`: Faster R-CNN based watermark-location proposal code.
-- `superpixel_fcn/`: imported superpixel segmentation dependency used by the mask-location search pipeline.
+- `inpainting/AWD_AGP/official_surrogate_generate_AE.py`: generate transferable adversarial examples with AWD-AGP.
+- `inpainting/AWD_AGP/official_Attack.py`: attack objectives, perturbation optimization, integrated-gradient attribution, and AGP logic.
+- `inpainting/AWD_AGP/official_transfer_attack.py`: transfer evaluation on inpainting-based removers.
+- `inpainting/AWD_AGP/official_transfer_attack_for_wr.py`: transfer evaluation on blind watermark removers.
+- `inpainting/AWD_AGP/official_evaluate.py`: metrics for inpainting-based removal results.
+- `inpainting/AWD_AGP/official_evaluate_for_wr.py`: metrics for blind watermark-removal results.
+- `inpainting/AWD_AGP/official_dataset.py`: dataset loading, watermark attachment, and mask handling.
+- `inpainting/AWD_AGP/official_load_models.py`: central model-loader for inpainting and watermark-removal wrappers.
+- `inpainting/AWD_AGP/official_utils.py`, `inpainting/AWD_AGP/official_noise_func.py`: shared utility and perturbation modules.
+- `inpainting/AWD_AGP/source_models/`: adapter APIs for RFR, GMCNN, EdgeConnect, CR-Fill, Generative Inpainting, FcF, MAT, WDNet, DBWE, and SLBR.
+- `inpainting/AWD_AGP/mask_RPN/`: Faster R-CNN based watermark-location proposal code.
+- `inpainting/AWD_AGP/superpixel_fcn/`: imported superpixel segmentation dependency used by the mask-location search pipeline.
 
 Compatibility wrappers `Attack.py`, `load_models.py`, and `utils.py` are kept for older scripts that imported the pre-extraction module names.
 
@@ -31,7 +31,7 @@ Typical setup:
 pip install -r requirements.txt
 ```
 
-Then install or place the external model projects/checkpoints expected by the wrappers in `source_models/`. Check `official_load_models.py`, the corresponding file in `source_models/`, and `WEIGHTS.md` when adapting paths.
+Then install or place the external model projects/checkpoints expected by the wrappers in `inpainting/AWD_AGP/source_models/`. Check `inpainting/AWD_AGP/official_load_models.py`, the corresponding file in `inpainting/AWD_AGP/source_models/`, and `WEIGHTS.md` when adapting paths.
 
 ## Main Usage
 

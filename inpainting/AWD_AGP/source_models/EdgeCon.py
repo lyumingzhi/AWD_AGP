@@ -105,10 +105,10 @@ class ConnectEdgeAPI(torch.nn.Module):
 
         # args = parser.parse_args()
 
-        if self.opt.dataset=='celeba':
+        config_path = getattr(self.opt, 'edgeconnect_config', None) or os.environ.get('AWD_AGP_EDGECONNECT_CONFIG')
+        if not config_path and self.opt.dataset=='celeba':
             config_path = os.path.join('inpainting/edge_connect/checkpoints/celeba', 'pipeline_config.yml')
-        
-        elif self.opt.dataset=='places2':
+        elif not config_path and self.opt.dataset=='places2':
             config_path = os.path.join('inpainting/edge_connect/checkpoints/places2', 'pipeline_config.yml')
         
 
