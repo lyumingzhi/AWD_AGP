@@ -34,3 +34,7 @@ dist/
 
 # Demo outputs
 quickstart_outputs/
+
+# Local Google Drive checkpoint downloads
+weights/*
+!weights/README.md

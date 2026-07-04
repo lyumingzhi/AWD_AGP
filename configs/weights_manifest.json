@@ -1,0 +1,157 @@
+{
+  "version": 1,
+  "weights_root_env": "AWD_AGP_WEIGHTS_DIR",
+  "default_weights_root": "weights",
+  "notes": "Fill gdrive_url or gdrive_file_id after uploading checkpoints to Google Drive.",
+  "entries": {
+    "rfr_places2_checkpoint": {
+      "local_path": "weights/RFR/checkpoint_places2.pth",
+      "cli_arg": "--rfr_places2_checkpoint",
+      "env": "AWD_AGP_RFR_PLACES2_CKPT",
+      "gdrive_url": "",
+      "gdrive_file_id": "",
+      "required_for": [
+        "RFRnet with --dataset places2"
+      ]
+    },
+    "generative_places2_checkpoint": {
+      "local_path": "weights/generative_inpainting/chkpt/places2.pth",
+      "cli_arg": "--generative_checkpoint",
+      "env": "AWD_AGP_GENERATIVE_CKPT",
+      "gdrive_url": "",
+      "gdrive_file_id": "",
+      "required_for": [
+        "Gennet/Generative Inpainting places2"
+      ]
+    },
+    "generative_config": {
+      "local_path": "weights/generative_inpainting/configs/config.yaml",
+      "cli_arg": "--generative_config",
+      "env": "AWD_AGP_GENERATIVE_CONFIG",
+      "gdrive_url": "",
+      "gdrive_file_id": "",
+      "required_for": [
+        "Gennet/Generative Inpainting"
+      ]
+    },
+    "gmcnn_places2_checkpoint_dir": {
+      "local_path": "weights/inpainting_gmcnn/pytorch/chkpts/places2_rect",
+      "cli_arg": "--gmcnn_checkpoint_dir",
+      "env": "AWD_AGP_GMCNN_CKPT_DIR",
+      "gdrive_url": "",
+      "gdrive_file_id": "",
+      "type": "directory",
+      "required_for": [
+        "GMCNNnet places2"
+      ]
+    },
+    "gmcnn_config": {
+      "local_path": "weights/inpainting_gmcnn/pytorch/options/config.yaml",
+      "cli_arg": "--gmcnn_config",
+      "env": "AWD_AGP_GMCNN_CONFIG",
+      "gdrive_url": "",
+      "gdrive_file_id": "",
+      "required_for": [
+        "GMCNNnet"
+      ]
+    },
+    "edgeconnect_places2_config": {
+      "local_path": "weights/edge_connect/checkpoints/places2/pipeline_config.yml",
+      "cli_arg": "--edgeconnect_config",
+      "env": "AWD_AGP_EDGECONNECT_CONFIG",
+      "gdrive_url": "",
+      "gdrive_file_id": "",
+      "required_for": [
+        "EdgeConnet places2"
+      ]
+    },
+    "mat_places_checkpoint": {
+      "local_path": "weights/MAT/pretrained/Places_512_FullData_real.pkl",
+      "cli_arg": "--mat_checkpoint",
+      "env": "AWD_AGP_MAT_CKPT",
+      "gdrive_url": "",
+      "gdrive_file_id": "",
+      "required_for": [
+        "Matnet"
+      ]
+    },
+    "fcf_checkpoint": {
+      "local_path": "weights/FcF_Inpainting/G.pt",
+      "cli_arg": "--fcf_checkpoint",
+      "env": "AWD_AGP_FCF_CKPT",
+      "gdrive_url": "",
+      "gdrive_file_id": "",
+      "required_for": [
+        "FcFnet"
+      ]
+    },
+    "crfill_objrmv_config": {
+      "local_path": "weights/crfill/checkpoints/objrmv/objrmv.yaml",
+      "cli_arg": "--crfill_objrmv_config",
+      "env": "AWD_AGP_CRFILL_OBJRMV_CONFIG",
+      "gdrive_url": "",
+      "gdrive_file_id": "",
+      "required_for": [
+        "Crfillnet celeba/objrmv"
+      ]
+    },
+    "crfill_places_config": {
+      "local_path": "weights/crfill/checkpoints/places/places.yaml",
+      "cli_arg": "--crfill_places_config",
+      "env": "AWD_AGP_CRFILL_PLACES_CONFIG",
+      "gdrive_url": "",
+      "gdrive_file_id": "",
+      "required_for": [
+        "Crfillnet places2"
+      ]
+    },
+    "wdnet_checkpoint": {
+      "local_path": "third_party/inpainting/WDNet/WDNet_G.pkl",
+      "cli_arg": "--wdnet_checkpoint",
+      "env": "AWD_AGP_WDNET_CKPT",
+      "bundled": true,
+      "required_for": [
+        "WDModel quickstart and WDNet transfer"
+      ]
+    },
+    "dbwe_checkpoint": {
+      "local_path": "weights/DBWEModel/27kpng_model_best.pth.tar",
+      "cli_arg": "--dbwe_checkpoint",
+      "env": "AWD_AGP_DBWE_CKPT",
+      "gdrive_url": "",
+      "gdrive_file_id": "",
+      "required_for": [
+        "DBWEModel"
+      ]
+    },
+    "slbr_checkpoint": {
+      "local_path": "weights/SLBR/model_best.pth.tar",
+      "cli_arg": "--slbr_checkpoint",
+      "env": "AWD_AGP_SLBR_CKPT",
+      "gdrive_url": "",
+      "gdrive_file_id": "",
+      "required_for": [
+        "SLBRModel"
+      ]
+    },
+    "superpixel_checkpoint": {
+      "local_path": "weights/superpixel_fcn/pretrain_ckpt/SpixelNet_bsd_ckpt.tar",
+      "env": "AWD_AGP_SUPERPIXEL_CKPT",
+      "gdrive_url": "",
+      "gdrive_file_id": "",
+      "required_for": [
+        "superpixel mask-location search"
+      ]
+    },
+    "mask_rpn_checkpoint_dir": {
+      "local_path": "weights/mask_RPN/checkpoints",
+      "env": "AWD_AGP_MASK_RPN_CKPT_DIR",
+      "type": "directory",
+      "gdrive_url": "",
+      "gdrive_file_id": "",
+      "required_for": [
+        "RPN refined mask generation"
+      ]
+    }
+  }
+}

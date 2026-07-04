@@ -1,17 +1,23 @@
 
 def get_superpixel_model(pretrained=None):
     from pathlib import Path
+    import os
+    from inpainting.AWD_AGP.weight_utils import resolve_weight_path
     import torch
     from inpainting.AWD_AGP.superpixel_fcn import models as superpixel_fcn_models
 
     if pretrained is None:
-        repo_root = Path(__file__).resolve().parents[3]
-        pretrained = repo_root / "superpixel_fcn" / "pretrain_ckpt" / "SpixelNet_bsd_ckpt.tar"
+        pretrained = resolve_weight_path(
+            "weights/superpixel_fcn/pretrain_ckpt/SpixelNet_bsd_ckpt.tar",
+            env_var="AWD_AGP_SUPERPIXEL_CKPT",
+            fallback_paths=[Path(__file__).resolve().parents[3] / "superpixel_fcn" / "pretrain_ckpt" / "SpixelNet_bsd_ckpt.tar"],
+            required_name="Superpixel checkpoint",
+        )
     pretrained = Path(pretrained)
     if not pretrained.exists():
         raise FileNotFoundError(
             f"Superpixel checkpoint not found: {pretrained}. "
-            "Download SpixelNet_bsd_ckpt.tar and pass its path to get_superpixel_model()."
+            "Download SpixelNet_bsd_ckpt.tar, set AWD_AGP_SUPERPIXEL_CKPT, or place it under weights/superpixel_fcn/pretrain_ckpt/."
         )
     network_data = torch.load(str(pretrained))
     model = superpixel_fcn_models.__dict__[network_data["arch"]](data=network_data).cuda()

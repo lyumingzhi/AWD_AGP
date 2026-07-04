@@ -13,3 +13,4 @@ matplotlib
 visdom
 gradio
 requests
+gdown

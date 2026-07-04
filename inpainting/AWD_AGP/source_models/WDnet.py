@@ -1,4 +1,5 @@
 import torch, time, os, pickle
+from inpainting.AWD_AGP.weight_utils import resolve_weight_path
 import numpy as np
 import torch.nn as nn
 import torch.optim as optim
@@ -78,10 +79,7 @@ class WDnet(nn.Module):
         # if self.gpu_mode:
         #     self.sample_z_, self.sample_y_ = self.sample_z_.cuda(), self.sample_y_.cuda()
 
-        checkpoint = getattr(args, 'wdnet_checkpoint', None) if args is not None else None
-        checkpoint = checkpoint or os.environ.get('AWD_AGP_WDNET_CKPT') or 'inpainting/WDNet/WDNet_G.pkl'
-        if not os.path.exists(checkpoint):
-            raise FileNotFoundError('WDNet checkpoint not found. Set args.wdnet_checkpoint or AWD_AGP_WDNET_CKPT.')
+        checkpoint = resolve_weight_path('third_party/inpainting/WDNet/WDNet_G.pkl', args, 'wdnet_checkpoint', 'AWD_AGP_WDNET_CKPT', ['inpainting/WDNet/WDNet_G.pkl'], 'WDNet checkpoint')
         self.G.load_state_dict(torch.load(checkpoint))
         self.G.eval()
     def forward(self, x, mask):

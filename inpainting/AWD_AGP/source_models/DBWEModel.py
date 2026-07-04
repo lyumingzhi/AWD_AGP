@@ -3,6 +3,7 @@ from __future__ import print_function, absolute_import
 import argparse
 import torch
 import os
+from inpainting.AWD_AGP.weight_utils import resolve_weight_path
 from math import log10
 import cv2
 import numpy as np
@@ -40,10 +41,7 @@ class DBWRnet(nn.Module):
         self.model.cuda()
         
 
-        resume_path = getattr(args, 'dbwe_checkpoint', None) if args is not None else None
-        resume_path = resume_path or os.environ.get('AWD_AGP_DBWE_CKPT')
-        if not resume_path or not os.path.exists(resume_path):
-            raise FileNotFoundError('DBWE checkpoint not found. Set args.dbwe_checkpoint or AWD_AGP_DBWE_CKPT.')
+        resume_path = resolve_weight_path('weights/DBWEModel/27kpng_model_best.pth.tar', args, 'dbwe_checkpoint', 'AWD_AGP_DBWE_CKPT', ['inpainting/DBWEModel/27kpng_model_best.pth.tar'], 'DBWE checkpoint')
         print("=> loading checkpoint '{}'".format(resume_path))
         current_checkpoint = torch.load(resume_path)
         # print('current ckpt', current_checkpoint['arch'])

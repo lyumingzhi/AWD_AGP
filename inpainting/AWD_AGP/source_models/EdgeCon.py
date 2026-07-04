@@ -4,6 +4,7 @@ import torch
 from inpainting.edge_connect.src.config import Config
 from shutil import copyfile
 import os
+from inpainting.AWD_AGP.weight_utils import resolve_weight_path
 
 import kornia as K
 import torchvision
@@ -105,11 +106,10 @@ class ConnectEdgeAPI(torch.nn.Module):
 
         # args = parser.parse_args()
 
-        config_path = getattr(self.opt, 'edgeconnect_config', None) or os.environ.get('AWD_AGP_EDGECONNECT_CONFIG')
-        if not config_path and self.opt.dataset=='celeba':
-            config_path = os.path.join('inpainting/edge_connect/checkpoints/celeba', 'pipeline_config.yml')
-        elif not config_path and self.opt.dataset=='places2':
-            config_path = os.path.join('inpainting/edge_connect/checkpoints/places2', 'pipeline_config.yml')
+        if self.opt.dataset=='celeba':
+            config_path = resolve_weight_path('weights/edge_connect/checkpoints/celeba/pipeline_config.yml', self.opt, 'edgeconnect_config', 'AWD_AGP_EDGECONNECT_CONFIG', ['inpainting/edge_connect/checkpoints/celeba/pipeline_config.yml'], 'EdgeConnect celeba config')
+        elif self.opt.dataset=='places2':
+            config_path = resolve_weight_path('weights/edge_connect/checkpoints/places2/pipeline_config.yml', self.opt, 'edgeconnect_config', 'AWD_AGP_EDGECONNECT_CONFIG', ['inpainting/edge_connect/checkpoints/places2/pipeline_config.yml'], 'EdgeConnect places2 config')
         
 
         # create checkpoints path if does't exist

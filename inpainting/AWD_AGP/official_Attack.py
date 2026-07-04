@@ -10,7 +10,17 @@ import torch
 # from inpainting.inpainting_gmcnn.pytorch.noise_fn import Noise_Func
 from inpainting.AWD_AGP.official_noise_func import Noise_Func
 from torch.optim.lr_scheduler import StepLR
-from inpainting.inpainting_gmcnn.pytorch.util.utils import generate_rect_mask, generate_stroke_mask, getLatest
+def generate_rect_mask(*args, **kwargs):
+    from inpainting.inpainting_gmcnn.pytorch.util.utils import generate_rect_mask as _generate_rect_mask
+    return _generate_rect_mask(*args, **kwargs)
+
+def generate_stroke_mask(*args, **kwargs):
+    from inpainting.inpainting_gmcnn.pytorch.util.utils import generate_stroke_mask as _generate_stroke_mask
+    return _generate_stroke_mask(*args, **kwargs)
+
+def getLatest(*args, **kwargs):
+    from inpainting.inpainting_gmcnn.pytorch.util.utils import getLatest as _getLatest
+    return _getLatest(*args, **kwargs)
 import cv2
 import torch.optim as optim
 import torchvision

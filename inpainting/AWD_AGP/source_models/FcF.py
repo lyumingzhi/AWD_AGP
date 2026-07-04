@@ -1,9 +1,9 @@
 import torch
+import os
+from inpainting.AWD_AGP.weight_utils import resolve_weight_path
 
 from inspect import formatargvalues
 # from inpainting.RFR_Inpainting.model import RFRNetModel
-import torch
-import os
 import yaml
 import time 
 import numpy as np
@@ -37,7 +37,8 @@ class FcFnetAPI(torch.nn.Module):
         #     G = legacy.load_network_pkl(f)['G_ema'] # type: ignore
         
 
-        checkpoint=torch.load('inpainting/FcF_Inpainting/G.pt')
+        checkpoint_path = resolve_weight_path('weights/FcF_Inpainting/G.pt', opt, 'fcf_checkpoint', 'AWD_AGP_FCF_CKPT', ['inpainting/FcF_Inpainting/G.pt'], 'FcF checkpoint')
+        checkpoint=torch.load(checkpoint_path)
         self.module.load_state_dict(checkpoint)
         self.module.eval().cuda()
         ic(self.module.encoder.b256.img_channels)

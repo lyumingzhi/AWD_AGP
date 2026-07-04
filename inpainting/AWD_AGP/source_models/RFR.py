@@ -3,6 +3,7 @@ from inpainting.RFR_Inpainting.model import RFRNetModel
 import torch
 import os
 import yaml
+from inpainting.AWD_AGP.weight_utils import resolve_weight_path
 import time 
 import numpy as np
 import torchvision

@@ -28,6 +28,7 @@ def get_args():
     parser.add_argument('--budget', type=float, default=0.03)
 
     parser.add_argument('--relative_mask_size', type=float, default=0.33)
+    parser.add_argument('--weights_dir', type=str, default=None, help='directory containing Google Drive downloaded checkpoints')
 
     parser.add_argument('--rfr_places2_checkpoint', type=str, default=None, help='path to RFR places2 checkpoint')
     parser.add_argument('--generative_checkpoint', type=str, default=None, help='path to Generative Inpainting checkpoint')
@@ -38,6 +39,9 @@ def get_args():
     parser.add_argument('--mat_checkpoint', type=str, default=None, help='path to MAT checkpoint pkl')
     parser.add_argument('--wdnet_checkpoint', type=str, default=None, help='path to WDNet generator checkpoint')
     parser.add_argument('--dbwe_checkpoint', type=str, default=None, help='path to DBWE checkpoint')
+    parser.add_argument('--fcf_checkpoint', type=str, default=None, help='path to FcF checkpoint')
+    parser.add_argument('--crfill_objrmv_config', type=str, default=None, help='path to CR-Fill objrmv config yaml')
+    parser.add_argument('--crfill_places_config', type=str, default=None, help='path to CR-Fill places config yaml')
     parser.add_argument('--slbr_checkpoint', type=str, default=None, help='path to SLBR checkpoint')
 
     # ADMM

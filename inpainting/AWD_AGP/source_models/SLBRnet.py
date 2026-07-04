@@ -3,6 +3,7 @@ from __future__ import print_function, absolute_import
 import argparse
 import torch
 import os
+from inpainting.AWD_AGP.weight_utils import resolve_weight_path
 from math import log10
 import cv2
 import numpy as np
@@ -34,10 +35,7 @@ class SLBRnet(nn.Module):
         self.model = nets.__dict__[self.args.nets](args=self.args)
         self.model.cuda()
 
-        resume_path = getattr(args, 'slbr_checkpoint', None) if args is not None else None
-        resume_path = resume_path or os.environ.get('AWD_AGP_SLBR_CKPT') or 'inpainting/SLBR/model_best.pth (1).tar'
-        if not os.path.exists(resume_path):
-            raise FileNotFoundError('SLBR checkpoint not found. Set args.slbr_checkpoint or AWD_AGP_SLBR_CKPT.')
+        resume_path = resolve_weight_path('weights/SLBR/model_best.pth.tar', args, 'slbr_checkpoint', 'AWD_AGP_SLBR_CKPT', ['inpainting/SLBR/model_best.pth (1).tar'], 'SLBR checkpoint')
         print("=> loading checkpoint '{}'".format(resume_path))
         current_checkpoint = torch.load(resume_path)
         if isinstance(current_checkpoint['state_dict'], torch.nn.DataParallel):

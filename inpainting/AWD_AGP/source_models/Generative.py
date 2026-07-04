@@ -1,5 +1,6 @@
 import torch
 import os
+from inpainting.AWD_AGP.weight_utils import resolve_weight_path
 from inpainting.generative_inpainting_pytorch.trainer import Trainer
 import imageio
 import numpy as np
@@ -9,13 +10,13 @@ class Generative(torch.nn.Module):
     def __init__(self,model_path='inpainting/generative_inpainting_pytorch/torch_model.p',device='cuda',config='inpainting/generative_inpainting_pytorch/configs/config.yaml',dataset='celeba', opt=None):
 
         super(Generative,self).__init__()
-        config_path = getattr(opt, 'generative_config', None) or os.environ.get('AWD_AGP_GENERATIVE_CONFIG') or config
+        config_path = resolve_weight_path('weights/generative_inpainting/configs/config.yaml', opt, 'generative_config', 'AWD_AGP_GENERATIVE_CONFIG', [config], 'Generative Inpainting config')
         config = get_config(config_path)
         if dataset=='places2':
-            model_path = getattr(opt, 'generative_checkpoint', None) or os.environ.get('AWD_AGP_GENERATIVE_CKPT') or 'inpainting/generative_inpainting_pytorch/chkpt/places2.pth'
+            model_path = resolve_weight_path('weights/generative_inpainting/chkpt/places2.pth', opt, 'generative_checkpoint', 'AWD_AGP_GENERATIVE_CKPT', ['inpainting/generative_inpainting_pytorch/chkpt/places2.pth'], 'Generative Inpainting places2 checkpoint')
             self.module=Trainer(config,FromTF=True)
         elif dataset=='celeba':
-            model_path = getattr(opt, 'generative_checkpoint', None) or os.environ.get('AWD_AGP_GENERATIVE_CKPT') or model_path
+            model_path = resolve_weight_path('weights/generative_inpainting/torch_model.p', opt, 'generative_checkpoint', 'AWD_AGP_GENERATIVE_CKPT', [model_path], 'Generative Inpainting checkpoint')
             self.module=Trainer(config,FromTF=False)
 
         self.opt=opt

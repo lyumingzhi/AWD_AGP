@@ -3,6 +3,7 @@ from inpainting.crfill.models.inpaint_model import InpaintModel
 import torchvision.transforms as transforms
 import yaml 
 import os 
+from inpainting.AWD_AGP.weight_utils import resolve_weight_path
 import torch
 
 class CrfillAPI(torch.nn.Module):
@@ -11,7 +12,7 @@ class CrfillAPI(torch.nn.Module):
         self.opt=opt
 
         self.dataset=dataset
-        opt=self.load_config()
+        opt=self.load_config(opt)
         self.module=InpaintModel(opt)
         transform_list = [
                 # transforms.ToTensor(), 
@@ -44,12 +45,30 @@ class CrfillAPI(torch.nn.Module):
         else:
             return composed_image,FeatList
     
-    def load_config(self):
+    def load_config(self, opt=None):
         if self.dataset=='objrmv':
-            config=Crfill_Config('inpainting/crfill/checkpoints/objrmv/objrmv.yaml')
+            config_path = resolve_weight_path(
+                'weights/crfill/checkpoints/objrmv/objrmv.yaml',
+                opt,
+                'crfill_objrmv_config',
+                'AWD_AGP_CRFILL_OBJRMV_CONFIG',
+                ['inpainting/crfill/checkpoints/objrmv/objrmv.yaml'],
+                'CR-Fill objrmv config',
+            )
         elif self.dataset=='places2':
-            config=Crfill_Config('inpainting/crfill/checkpoints/places/places.yaml')
+            config_path = resolve_weight_path(
+                'weights/crfill/checkpoints/places/places.yaml',
+                opt,
+                'crfill_places_config',
+                'AWD_AGP_CRFILL_PLACES_CONFIG',
+                ['inpainting/crfill/checkpoints/places/places.yaml'],
+                'CR-Fill places config',
+            )
+        else:
+            raise ValueError(f'Unsupported CR-Fill dataset: {self.dataset}')
+        config=Crfill_Config(config_path)
         return config
+
 
 
 class Crfill_Config(dict):

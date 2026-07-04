@@ -17,6 +17,7 @@ from scipy.interpolate import LinearNDInterpolator
 import numpy as np
 
 import os
+from inpainting.AWD_AGP.weight_utils import resolve_weight_path
 # from pykeops.torch import LazyTensor
 
 
@@ -353,7 +354,7 @@ def get_superpixel(image):
     
     
     # to get superpixels of the images, we use a pretrained model
-    pretrained='./inpainting/superpixel_fcn/pretrain_ckpt/SpixelNet_bsd_ckpt.tar'
+    pretrained = resolve_weight_path('weights/superpixel_fcn/pretrain_ckpt/SpixelNet_bsd_ckpt.tar', env_var='AWD_AGP_SUPERPIXEL_CKPT', fallback_paths=['inpainting/AWD_AGP/superpixel_fcn/pretrain_ckpt/SpixelNet_bsd_ckpt.tar'], required_name='Superpixel checkpoint')
     network_data = torch.load(pretrained)
     # print("=> using pre-trained model '{}'".format(network_data['arch']))
     model = models.__dict__[network_data['arch']]( data = network_data).cuda()

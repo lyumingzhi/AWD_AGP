@@ -1,7 +1,6 @@
 # from inpainting.RFR_Inpainting.run import attack
 from inpainting.AWD_AGP.official_Attack import Attacker
 import argparse
-from inpainting.AWD_AGP.source_models.FcF import FcFnetAPI
 import torch
 from inpainting.AWD_AGP.official_load_models import load_models
 import cv2

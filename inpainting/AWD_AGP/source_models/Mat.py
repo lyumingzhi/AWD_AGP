@@ -2,6 +2,7 @@ from pydoc import resolve
 from inpainting.MAT.networks.mat import Generator
 import torch
 import os
+from inpainting.AWD_AGP.weight_utils import resolve_weight_path
 import torchvision
 import inpainting.MAT.dnnlib as dnnlib
 import numpy as np
@@ -18,9 +19,7 @@ class MatAPI(torch.nn.Module):
 
         # self.copy_params_and_buffers(G_saved, self.module, require_all=True)
 
-        checkpoint = getattr(opt, 'mat_checkpoint', None) or os.environ.get('AWD_AGP_MAT_CKPT') or 'inpainting/MAT/pretrained/Places_512_FullData_real.pkl'
-        if not os.path.exists(checkpoint):
-            raise FileNotFoundError('MAT checkpoint not found. Set --mat_checkpoint or AWD_AGP_MAT_CKPT.')
+        checkpoint = resolve_weight_path('weights/MAT/pretrained/Places_512_FullData_real.pkl', opt, 'mat_checkpoint', 'AWD_AGP_MAT_CKPT', ['inpainting/MAT/pretrained/Places_512_FullData_real.pkl'], 'MAT checkpoint')
         self.module.load_state_dict(torch.load(checkpoint))
         self.module.eval()
     def forward(self,x,masks,keepFeat=False):

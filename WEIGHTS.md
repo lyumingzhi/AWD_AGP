@@ -2,20 +2,23 @@
 
 This GitHub-ready copy does not include large model weights, third-party checkpoints, or generated experiment outputs.
 
-Place or configure weights as follows:
+Place or configure weights as follows. The canonical machine-readable list is `configs/weights_manifest.json`; fill its Google Drive fields after uploading your checkpoints.
 
-| Component | CLI argument | Environment variable | Notes |
-| --- | --- | --- | --- |
-| RFR places2 | `--rfr_places2_checkpoint` | `AWD_AGP_RFR_PLACES2_CKPT` | Required when using `RFRnet` with `--dataset places2`. |
-| Generative Inpainting | `--generative_checkpoint`, `--generative_config` | `AWD_AGP_GENERATIVE_CKPT`, `AWD_AGP_GENERATIVE_CONFIG` | Falls back to the original third-party project paths for compatibility. |
-| GMCNN | `--gmcnn_checkpoint_dir`, `--gmcnn_config` | `AWD_AGP_GMCNN_CKPT_DIR`, `AWD_AGP_GMCNN_CONFIG` | Checkpoint argument is the directory containing `.pth` files. |
-| EdgeConnect | `--edgeconnect_config` | `AWD_AGP_EDGECONNECT_CONFIG` | Points to `pipeline_config.yml`; the external EdgeConnect project still supplies model code/checkpoints. |
-| MAT | `--mat_checkpoint` | `AWD_AGP_MAT_CKPT` | Falls back to `inpainting/MAT/pretrained/Places_512_FullData_real.pkl` for compatibility. |
-| WDNet | `--wdnet_checkpoint` | `AWD_AGP_WDNET_CKPT` | Falls back to `inpainting/WDNet/WDNet_G.pkl` for compatibility. |
-| DBWE | `--dbwe_checkpoint` | `AWD_AGP_DBWE_CKPT` | Required when using `DBWEModel`. |
-| SLBR | `--slbr_checkpoint` | `AWD_AGP_SLBR_CKPT` | Falls back to `inpainting/SLBR/model_best.pth (1).tar` for compatibility. |
-| Mask RPN | n/a | n/a | Put proposal checkpoints under `inpainting/AWD_AGP/mask_RPN/checkpoints/` or pass the result directory via `--RPNRefineMask`. |
-| Superpixel FCN | function argument | n/a | Put `SpixelNet_bsd_ckpt.tar` under `inpainting/AWD_AGP/superpixel_fcn/pretrain_ckpt/`, or pass a path to `get_superpixel_model(pretrained=...)`. |
+| Component | CLI argument | Environment variable | Default local path | Notes |
+| --- | --- | --- | --- | --- |
+| Global weights root | `--weights_dir` | `AWD_AGP_WEIGHTS_DIR` | `weights/` | Used by all entries whose path starts with `weights/`. |
+| RFR places2 | `--rfr_places2_checkpoint` | `AWD_AGP_RFR_PLACES2_CKPT` | `weights/RFR/checkpoint_places2.pth` | Required when using `RFRnet` with `--dataset places2`. |
+| Generative Inpainting | `--generative_checkpoint`, `--generative_config` | `AWD_AGP_GENERATIVE_CKPT`, `AWD_AGP_GENERATIVE_CONFIG` | `weights/generative_inpainting/...` | Checkpoint and config are both represented in `configs/weights_manifest.json`. |
+| GMCNN | `--gmcnn_checkpoint_dir`, `--gmcnn_config` | `AWD_AGP_GMCNN_CKPT_DIR`, `AWD_AGP_GMCNN_CONFIG` | `weights/inpainting_gmcnn/...` | Checkpoint argument is the directory containing `.pth` files. |
+| EdgeConnect | `--edgeconnect_config` | `AWD_AGP_EDGECONNECT_CONFIG` | `weights/edge_connect/checkpoints/<dataset>/pipeline_config.yml` | The external EdgeConnect project still supplies model code/checkpoints referenced by the config. |
+| MAT | `--mat_checkpoint` | `AWD_AGP_MAT_CKPT` | `weights/MAT/pretrained/Places_512_FullData_real.pkl` | Full-paper inpainting backend. |
+| FcF | `--fcf_checkpoint` | `AWD_AGP_FCF_CKPT` | `weights/FcF_Inpainting/G.pt` | Full-paper inpainting backend. |
+| CR-Fill | `--crfill_objrmv_config`, `--crfill_places_config` | `AWD_AGP_CRFILL_OBJRMV_CONFIG`, `AWD_AGP_CRFILL_PLACES_CONFIG` | `weights/crfill/checkpoints/.../*.yaml` | Config files point to CR-Fill checkpoints. |
+| WDNet | `--wdnet_checkpoint` | `AWD_AGP_WDNET_CKPT` | `third_party/inpainting/WDNet/WDNet_G.pkl` | Bundled for quickstart; can be overridden. |
+| DBWE | `--dbwe_checkpoint` | `AWD_AGP_DBWE_CKPT` | `weights/DBWEModel/27kpng_model_best.pth.tar` | Blind watermark remover. |
+| SLBR | `--slbr_checkpoint` | `AWD_AGP_SLBR_CKPT` | `weights/SLBR/model_best.pth.tar` | Blind watermark remover. |
+| Mask RPN | n/a | `AWD_AGP_MASK_RPN_CKPT_DIR` | `weights/mask_RPN/checkpoints/` | Put proposal checkpoints here or pass the generated mask directory via `--RPNRefineMask`. |
+| Superpixel FCN | function argument | `AWD_AGP_SUPERPIXEL_CKPT` | `weights/superpixel_fcn/pretrain_ckpt/SpixelNet_bsd_ckpt.tar` | Used by mask-location search. |
 
 Large weights should be released separately, for example through GitHub Releases, Google Drive, Hugging Face, or institutional storage.
 

@@ -49,6 +49,15 @@ The protected adversarial example is written to
 saved in the same directory. The WDNet quickstart remover is included under
 `third_party/inpainting/WDNet`. See `docs/QUICKSTART_WDNET.md`.
 
+## Google Drive Checkpoints
+
+Full-paper checkpoints are expected to come from a Google Drive package. Fill
+`configs/weights_manifest.json` with your Drive links, then users can run
+`python scripts/download_gdrive_weights.py` and validate with
+`python scripts/check_weights.py`. The code automatically searches the local
+`weights/` directory, or a custom `--weights_dir` / `AWD_AGP_WEIGHTS_DIR`. See
+`docs/GOOGLE_DRIVE_WEIGHTS.md`.
+
 ## Main Usage
 
 Generate AWD-AGP adversarial examples:
