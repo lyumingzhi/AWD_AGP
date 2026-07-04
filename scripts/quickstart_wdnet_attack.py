@@ -28,7 +28,7 @@ def parse_args():
     parser = argparse.ArgumentParser(description="Generate and test a protected watermarked image with WDNet.")
     parser.add_argument("--input", default="blind_watermark_removal.jpg", help="input image path")
     parser.add_argument("--output-dir", default="quickstart_outputs/wdnet_demo", help="directory for generated images")
-    parser.add_argument("--external-inpainting-root", default=os.environ.get("AWD_AGP_EXTERNAL_INPAINTING_ROOT", ""), help="parent directory that contains third-party inpainting/WDNet")
+    parser.add_argument("--external-inpainting-root", default=os.environ.get("AWD_AGP_EXTERNAL_INPAINTING_ROOT", ""), help="optional parent directory that contains third-party inpainting/WDNet; defaults to this repository third_party directory")
     parser.add_argument("--wdnet-checkpoint", default=os.environ.get("AWD_AGP_WDNET_CKPT", ""), help="path to WDNet_G.pkl")
     parser.add_argument("--size", type=int, default=256, help="square resize used by the quickstart")
     parser.add_argument("--steps", type=int, default=30, help="PGD/Adam optimization steps")
@@ -41,16 +41,17 @@ def parse_args():
 
 
 def configure_external_imports(args):
+    candidate_roots = [REPO_ROOT / "third_party"]
     if args.external_inpainting_root:
-        root = Path(args.external_inpainting_root).expanduser().resolve()
-        if str(root) not in sys.path:
+        candidate_roots.append(Path(args.external_inpainting_root).expanduser().resolve())
+
+    for root in candidate_roots:
+        if root.exists() and str(root) not in sys.path:
             sys.path.append(str(root))
 
     checkpoint = Path(args.wdnet_checkpoint).expanduser() if args.wdnet_checkpoint else None
     if not checkpoint:
-        candidates = []
-        if args.external_inpainting_root:
-            candidates.append(Path(args.external_inpainting_root) / "inpainting" / "WDNet" / "WDNet_G.pkl")
+        candidates = [root / "inpainting" / "WDNet" / "WDNet_G.pkl" for root in candidate_roots]
         candidates.append(Path("inpainting/WDNet/WDNet_G.pkl"))
         for candidate in candidates:
             if candidate.exists():
@@ -59,17 +60,17 @@ def configure_external_imports(args):
 
     if not checkpoint or not checkpoint.exists():
         raise FileNotFoundError(
-            "WDNet checkpoint not found. Pass --wdnet-checkpoint /path/to/WDNet_G.pkl "
-            "or set AWD_AGP_WDNET_CKPT. If WDNet is stored as a sibling project, also pass "
-            "--external-inpainting-root /path/to/parent-that-contains-inpainting."
+            "WDNet checkpoint not found. The default expected path is "
+            f"{REPO_ROOT / 'third_party' / 'inpainting' / 'WDNet' / 'WDNet_G.pkl'}. "
+            "Alternatively pass --wdnet-checkpoint /path/to/WDNet_G.pkl or set AWD_AGP_WDNET_CKPT."
         )
 
     try:
         from inpainting.AWD_AGP.source_models.WDnet import WDnet
     except Exception as exc:
         raise ImportError(
-            "Could not import WDNet. Ensure the third-party WDNet project is importable as "
-            "inpainting.WDNet, for example by passing --external-inpainting-root /home1/mingzhi."
+            "Could not import WDNet. Ensure this repository contains third_party/inpainting/WDNet "
+            "or pass --external-inpainting-root /path/to/parent-that-contains-inpainting."
         ) from exc
 
     return WDnet, str(checkpoint)

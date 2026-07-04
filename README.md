@@ -46,7 +46,8 @@ python scripts/quickstart_wdnet_attack.py   --input blind_watermark_removal.jpg 
 
 The protected adversarial example is written to
 `quickstart_outputs/wdnet_demo/02_protected.png`, and WDNet test outputs are
-saved in the same directory. See `docs/QUICKSTART_WDNET.md`.
+saved in the same directory. The WDNet quickstart remover is included under
+`third_party/inpainting/WDNet`. See `docs/QUICKSTART_WDNET.md`.
 
 ## Main Usage
 

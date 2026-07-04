@@ -11,28 +11,21 @@ full paper experiments. It uses WDNet as a test blind watermark remover:
 
 ## Install the Third-Party Test Remover
 
-WDNet is used only as a lightweight quickstart remover. Install or place it as a
-sibling project and keep the checkpoint outside this repository:
-
-```bash
-cd /path/to/parent-that-contains-inpainting
-git clone https://github.com/MRUIL/WDNet.git inpainting/WDNet
-```
-
-Then place or download the trained generator checkpoint as:
+WDNet is used only as a lightweight quickstart remover. A verified copy of the
+WDNet code and `WDNet_G.pkl` checkpoint is included in this repository:
 
 ```text
-/path/to/parent-that-contains-inpainting/inpainting/WDNet/WDNet_G.pkl
+third_party/inpainting/WDNet
+third_party/inpainting/WDNet/WDNet_G.pkl
 ```
 
-The verified local copy uses:
+The vendored copy comes from:
 
 ```text
-/home1/mingzhi/inpainting/WDNet
-/home1/mingzhi/inpainting/WDNet/WDNet_G.pkl
+https://github.com/MRUIL/WDNet.git
 ```
 
-For a fresh checkout, use an equivalent layout or pass explicit paths:
+If you want to use an external copy instead, pass explicit paths:
 
 ```bash
 export AWD_AGP_EXTERNAL_INPAINTING_ROOT=/path/to/parent-that-contains-inpainting
@@ -48,8 +41,6 @@ conda activate ensemble
 
 python scripts/quickstart_wdnet_attack.py \
   --input blind_watermark_removal.jpg \
-  --external-inpainting-root /home1/mingzhi \
-  --wdnet-checkpoint /home1/mingzhi/inpainting/WDNet/WDNet_G.pkl \
   --output-dir quickstart_outputs/wdnet_demo \
   --steps 30 \
   --budget 0.03

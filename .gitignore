@@ -16,6 +16,7 @@ input_example.jpg
 *.pth.tar
 *.pt
 *.pkl
+!third_party/inpainting/WDNet/WDNet_G.pkl
 *.ckpt
 *.tar
 *.tar.gz

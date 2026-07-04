@@ -18,3 +18,19 @@ Place or configure weights as follows:
 | Superpixel FCN | function argument | n/a | Put `SpixelNet_bsd_ckpt.tar` under `inpainting/AWD_AGP/superpixel_fcn/pretrain_ckpt/`, or pass a path to `get_superpixel_model(pretrained=...)`. |
 
 Large weights should be released separately, for example through GitHub Releases, Google Drive, Hugging Face, or institutional storage.
+
+## Bundled Quickstart Checkpoint
+
+The WDNet quickstart remover and checkpoint are bundled under
+`third_party/inpainting/WDNet/`, including `WDNet_G.pkl`. This keeps the basic
+protected-image generation and blind-remover test path runnable from a fresh
+checkout.
+
+## Full Paper Checkpoints
+
+Several full paper backends require checkpoints larger than GitHub's normal
+100 MB single-file limit, for example MAT/FcF/RFR and some partial-convolution
+weights. Do not commit those large files directly to ordinary git history. Use
+GitHub Releases, Git LFS, Hugging Face, Google Drive, or institutional storage,
+then point the CLI arguments/environment variables above to the downloaded
+files.
