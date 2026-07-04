@@ -33,6 +33,21 @@ pip install -r requirements.txt
 
 Then install or place the external model projects/checkpoints expected by the wrappers in `inpainting/AWD_AGP/source_models/`. Check `inpainting/AWD_AGP/official_load_models.py`, the corresponding file in `inpainting/AWD_AGP/source_models/`, and `WEIGHTS.md` when adapting paths.
 
+## Quickstart Demo
+
+Before running the full paper setup, users can generate one protected
+watermarked image and test it with WDNet:
+
+```bash
+conda activate ensemble
+
+python scripts/quickstart_wdnet_attack.py   --input blind_watermark_removal.jpg   --external-inpainting-root /path/to/parent-that-contains-inpainting   --wdnet-checkpoint /path/to/inpainting/WDNet/WDNet_G.pkl   --output-dir quickstart_outputs/wdnet_demo
+```
+
+The protected adversarial example is written to
+`quickstart_outputs/wdnet_demo/02_protected.png`, and WDNet test outputs are
+saved in the same directory. See `docs/QUICKSTART_WDNET.md`.
+
 ## Main Usage
 
 Generate AWD-AGP adversarial examples:

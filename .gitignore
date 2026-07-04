@@ -30,3 +30,6 @@ dist/
 *.egg-info/
 *.so
 *.o
+
+# Demo outputs
+quickstart_outputs/
