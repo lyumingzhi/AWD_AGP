@@ -14,6 +14,26 @@
         "RFRnet with --dataset places2"
       ]
     },
+    "rfr_config": {
+      "local_path": "weights/RFR/RFR_Net_pretrained/celeba.yaml",
+      "cli_arg": "--rfr_config",
+      "env": "AWD_AGP_RFR_CONFIG",
+      "gdrive_url": "",
+      "gdrive_file_id": "",
+      "required_for": [
+        "RFRnet with --dataset celeba"
+      ]
+    },
+    "rfr_checkpoint": {
+      "local_path": "weights/RFR/RFR_Net_pretrained/checkpoint_celeba.pth",
+      "cli_arg": "--rfr_checkpoint",
+      "env": "AWD_AGP_RFR_CKPT",
+      "gdrive_url": "",
+      "gdrive_file_id": "",
+      "required_for": [
+        "RFRnet with --dataset celeba"
+      ]
+    },
     "generative_places2_checkpoint": {
       "local_path": "weights/generative_inpainting/chkpt/places2.pth",
       "cli_arg": "--generative_checkpoint",

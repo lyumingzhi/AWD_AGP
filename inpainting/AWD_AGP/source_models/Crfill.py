@@ -2,6 +2,7 @@ from inpainting.crfill.models.inpaint_model import InpaintModel
 import torchvision.transforms as transforms
 import yaml 
 import os 
+from pathlib import Path
 from inpainting.AWD_AGP.weight_utils import resolve_weight_path
 import torch
 
@@ -76,6 +77,10 @@ class Crfill_Config(dict):
             self._yaml = f.read()
             self._dict = yaml.safe_load(self._yaml)
             self._dict['Conifg_PATH'] = os.path.dirname(config_path)
+
+        checkpoint_dir = self._dict.get('checkpoints_dir')
+        if checkpoint_dir and not os.path.isabs(checkpoint_dir):
+            self._dict['checkpoints_dir'] = str(Path(config_path).resolve().parent.parent)
 
         # self.parse()
         # print(self)

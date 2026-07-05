@@ -2,11 +2,13 @@ from inpainting.inpainting_gmcnn.pytorch.model.net import InpaintingModel_GMCNN
 from inpainting.inpainting_gmcnn.pytorch.options.read_config import GMCNNConfig
 from inpainting.inpainting_gmcnn.pytorch.util.utils import generate_rect_mask, generate_stroke_mask, getLatest
 import os
+import tempfile
 from inpainting.AWD_AGP.weight_utils import resolve_weight_path
 import torch
 import cv2
 import torchvision.transforms as transforms
 import numpy as np
+import yaml
 class GMCNNAPI(torch.nn.Module):
     def __init__(self,dataset='celeba',opt=None):
         super(GMCNNAPI,self).__init__()
@@ -68,9 +70,41 @@ class GMCNNAPI(torch.nn.Module):
 
     def load_Config(self):
         config_path = resolve_weight_path('weights/inpainting_gmcnn/pytorch/options/config.yaml', self.opt, 'gmcnn_config', 'AWD_AGP_GMCNN_CONFIG', ['inpainting/inpainting_gmcnn/pytorch/options/config.yaml'], 'GMCNN config')
-        config=GMCNNConfig(config_path)
+        config_path_to_load = self._runtime_safe_config(config_path)
+        try:
+            config=GMCNNConfig(config_path_to_load)
+        finally:
+            if config_path_to_load != config_path and os.path.exists(config_path_to_load):
+                os.unlink(config_path_to_load)
         config.data_file='./imgs/celebahq_256x256/'
         return config
+
+    def _runtime_safe_config(self, config_path):
+        with open(config_path, 'r') as f:
+            config = yaml.safe_load(f) or {}
+
+        test_dir = config.get('test_dir')
+        if not test_dir or os.path.isabs(test_dir):
+            if test_dir:
+                os.makedirs(test_dir, exist_ok=True)
+            return config_path
+
+        runtime_test_dir = os.environ.get(
+            'AWD_AGP_GMCNN_TEST_DIR',
+            os.path.join(tempfile.gettempdir(), 'awd_agp_gmcnn_test_results'),
+        )
+        config['test_dir'] = os.path.abspath(runtime_test_dir)
+        os.makedirs(config['test_dir'], exist_ok=True)
+
+        handle = tempfile.NamedTemporaryFile(
+            mode='w',
+            suffix='.yaml',
+            prefix='awd_agp_gmcnn_',
+            delete=False,
+        )
+        with handle:
+            yaml.safe_dump(config, handle, default_flow_style=False)
+        return handle.name
 
 def generate_mask_rect(im_shapes, mask_shapes, rand=True):
     mask = np.zeros((im_shapes[0], im_shapes[1])).astype(np.float32)

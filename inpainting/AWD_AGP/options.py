@@ -31,6 +31,8 @@ def get_args():
     parser.add_argument('--weights_dir', type=str, default=None, help='directory containing Google Drive downloaded checkpoints')
 
     parser.add_argument('--rfr_places2_checkpoint', type=str, default=None, help='path to RFR places2 checkpoint')
+    parser.add_argument('--rfr_config', type=str, default=None, help='path to RFR config yaml')
+    parser.add_argument('--rfr_checkpoint', type=str, default=None, help='path to RFR checkpoint for non-places2 datasets')
     parser.add_argument('--generative_checkpoint', type=str, default=None, help='path to Generative Inpainting checkpoint')
     parser.add_argument('--generative_config', type=str, default=None, help='path to Generative Inpainting config yaml')
     parser.add_argument('--gmcnn_checkpoint_dir', type=str, default=None, help='directory containing GMCNN .pth checkpoints')

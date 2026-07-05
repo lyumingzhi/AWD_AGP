@@ -10,17 +10,21 @@ import cv2
 class RFRNetModelAPI(torch.nn.Module):
     def __init__(self,dataset,opt):
         super(RFRNetModelAPI,self).__init__()
-        config=self.load_config()
         self.module=RFRNetModel()
         self.opt=opt
+        self.dataset=dataset
         
         if dataset=='celeba':
-            self.module.initialize_model(config.model_path, False)
+            config=self.load_config(opt)
+            model_path = getattr(opt, 'rfr_checkpoint', None) or os.environ.get('AWD_AGP_RFR_CKPT') or config.model_path
+            self.module.initialize_model(model_path, False)
         elif dataset=='places2':
             model_path = getattr(opt, 'rfr_places2_checkpoint', None) or os.environ.get('AWD_AGP_RFR_PLACES2_CKPT')
             if not model_path or not os.path.exists(model_path):
                 raise FileNotFoundError('RFR places2 checkpoint not found. Set --rfr_places2_checkpoint or AWD_AGP_RFR_PLACES2_CKPT.')
             self.module.initialize_model(model_path, False)
+        else:
+            raise ValueError('Unsupported RFR dataset: {}'.format(dataset))
         self.module.cuda()
         self.module.G.eval()
     def forward(self,x,masks,keepFeat=False):
@@ -55,8 +59,16 @@ class RFRNetModelAPI(torch.nn.Module):
             return comp_B
         else:
             return comp_B, FeatList
-    def load_config(self):
-        config=RFR_Config('inpainting/RFR_Inpainting/RFR_Net_pretrained/celeba.yaml')
+    def load_config(self, opt=None):
+        config_path = resolve_weight_path(
+            'weights/RFR/RFR_Net_pretrained/celeba.yaml',
+            opt,
+            'rfr_config',
+            'AWD_AGP_RFR_CONFIG',
+            ['inpainting/RFR_Inpainting/RFR_Net_pretrained/celeba.yaml'],
+            'RFR config',
+        )
+        config=RFR_Config(config_path)
         return config
 
 

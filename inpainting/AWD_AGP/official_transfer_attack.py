@@ -59,6 +59,8 @@ def main():
     parser.add_argument('--crfill_objrmv_config', type=str, default=None, help='path to CR-Fill objrmv config yaml')
     parser.add_argument('--crfill_places_config', type=str, default=None, help='path to CR-Fill places config yaml')
     parser.add_argument('--rfr_places2_checkpoint', type=str, default=None, help='path to RFR places2 checkpoint')
+    parser.add_argument('--rfr_config', type=str, default=None, help='path to RFR config yaml')
+    parser.add_argument('--rfr_checkpoint', type=str, default=None, help='path to RFR checkpoint for non-places2 datasets')
     parser.add_argument('--wdnet_checkpoint', type=str, default=None, help='path to WDNet generator checkpoint')
     parser.add_argument('--dbwe_checkpoint', type=str, default=None, help='path to DBWE checkpoint')
     parser.add_argument('--slbr_checkpoint', type=str, default=None, help='path to SLBR checkpoint')
