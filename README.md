@@ -2,6 +2,8 @@
 
 Official implementation of **Adversarial Attack for Robust Watermark Protection Against Inpainting-based and Blind Watermark Removers**.
 
+Paper: [ACM MM 2023 PDF](https://dl.acm.org/doi/pdf/10.1145/3581783.3612034)
+
 This repository contains the core AWD-AGP attack code, model-adapter APIs, transfer-evaluation scripts, and the mask-location search components used in the paper. The third-party watermark-removal and inpainting models are referenced through lightweight wrappers in `source_models/`; users should install those projects and adapt checkpoints/paths locally.
 
 ## Repository Layout
