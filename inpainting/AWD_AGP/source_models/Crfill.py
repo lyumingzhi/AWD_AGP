@@ -1,4 +1,3 @@
-from sympy import comp
 from inpainting.crfill.models.inpaint_model import InpaintModel
 import torchvision.transforms as transforms
 import yaml 

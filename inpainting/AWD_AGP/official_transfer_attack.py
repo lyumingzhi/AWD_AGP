@@ -70,22 +70,10 @@ def main():
     
    
 
-    RFRnet, GMCNNnet, Crfillnet, EdgeConnet, Gennet, FcFnet, Matnet, WDModel, DBWEModel, SLBRModel = load_models(opt)
-    all_models = {
-        'RFRnet': RFRnet,
-        'GMCNNnet': GMCNNnet,
-        'EdgeConnet': EdgeConnet,
-        'Crfillnet': Crfillnet,
-        'Gennet': Gennet,
-        'FcFnet': FcFnet,
-        'Matnet': Matnet,
-        'WDModel': WDModel,
-        'DBWEModel': DBWEModel,
-        'SLBRModel': SLBRModel,
-    }
-    if opt.target_model not in all_models:
-        raise ValueError(f"Unknown target_model {opt.target_model!r}. Choose from {sorted(all_models)}")
-    modelsToTest = {opt.target_model: all_models[opt.target_model]}
+    valid_models = ['RFRnet', 'GMCNNnet', 'EdgeConnet', 'Crfillnet', 'Gennet', 'FcFnet', 'Matnet', 'WDModel', 'DBWEModel', 'SLBRModel']
+    if opt.target_model not in valid_models:
+        raise ValueError(f"Unknown target_model {opt.target_model!r}. Choose from {valid_models}")
+    modelsToTest = load_models(opt, [opt.target_model], as_dict=True)
         
     # models={'GMCNNnet':GMCNNnet}
     # models={'RFRnet':RFRnet}

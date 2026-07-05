@@ -2,7 +2,6 @@ import torch
 import os
 from inpainting.AWD_AGP.weight_utils import resolve_weight_path
 
-from inspect import formatargvalues
 # from inpainting.RFR_Inpainting.model import RFRNetModel
 import yaml
 import time 
@@ -49,7 +48,7 @@ class FcFnetAPI(torch.nn.Module):
         self.label = torch.zeros([1, self.module.c_dim]).to(device)
         if self.module.c_dim != 0:
             if class_idx is None:
-                ctx.fail('Must specify class label with --class when using a conditional network')
+                raise ValueError('Must specify class_idx when using a conditional FcF network')
             self.label[:, class_idx] = 1
         else:
             if class_idx is not None:

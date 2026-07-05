@@ -1,4 +1,3 @@
-from inspect import formatargvalues
 from inpainting.RFR_Inpainting.model import RFRNetModel
 import torch
 import os

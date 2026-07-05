@@ -601,7 +601,7 @@ class Attacker():
                             # generated_mask=self.ADMM(input,noise_func,mask,target_patch=original_output,original_FeatList=original_FeatList)
                             # assert cv2.imwrite('inpainting/AWD_AGP/experiment_result/generated_mask.jpg',generated_mask.detach().cpu().numpy()[0].transpose(1,2,0)*255)
 
-                            raise 'no implementation error'
+                            raise NotImplementedError('optimal_mask_search is not implemented in this attack path')
                             continue
                         else:
                             if 'perceptual_loss' in self.opt.lossType:
@@ -639,7 +639,7 @@ class Attacker():
                             # generated_mask=self.ADMM(input,noise_func,mask,target_patch=original_output)
                             # assert cv2.imwrite('inpainting/AWD_AGP/experiment_result/generated_mask.jpg',generated_mask.detach().cpu().numpy()[0].transpose(1,2,0)*255)
                             
-                            raise 'no implementation error'
+                            raise NotImplementedError('optimal_mask_search is not implemented in this attack path')
                             continue
 
                         # pure pixel-wise loss
