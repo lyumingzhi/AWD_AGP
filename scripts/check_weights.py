@@ -18,6 +18,23 @@ def resolve_path(repo_root, weights_root, entry):
         return weights_root / Path(*path.parts[1:])
     return repo_root / path
 
+CORE_PROFILE_ENTRIES = [
+    "rfr_config",
+    "rfr_checkpoint",
+    "generative_places2_checkpoint",
+    "generative_config",
+    "gmcnn_places2_checkpoint_dir",
+    "gmcnn_config",
+    "edgeconnect_places2_config",
+    "mat_places_checkpoint",
+    "fcf_checkpoint",
+    "crfill_objrmv_config",
+    "crfill_places_config",
+    "dbwe_checkpoint",
+    "slbr_checkpoint",
+    "superpixel_checkpoint",
+]
+
 
 def main():
     parser = argparse.ArgumentParser(description="Check AWD-AGP local checkpoint files.")
@@ -25,6 +42,7 @@ def main():
     parser.add_argument("--weights-dir", default=os.environ.get("AWD_AGP_WEIGHTS_DIR", "weights"))
     parser.add_argument("--require", action="append", default=[], help="entry key to require; defaults to all non-bundled entries")
     parser.add_argument("--include-bundled", action="store_true", help="also check bundled entries such as WDNet")
+    parser.add_argument("--profile", choices=["core"], default=None, help="check a curated profile such as the core Google Drive weights package")
     args = parser.parse_args()
 
     repo_root = Path(__file__).resolve().parents[1]
@@ -35,7 +53,12 @@ def main():
 
     manifest = load_manifest(manifest_path)
     entries = manifest["entries"]
-    selected = args.require or [k for k, v in entries.items() if args.include_bundled or not v.get("bundled")]
+    if args.require:
+        selected = args.require
+    elif args.profile == "core":
+        selected = CORE_PROFILE_ENTRIES
+    else:
+        selected = [k for k, v in entries.items() if args.include_bundled or not v.get("bundled")]
 
     missing = []
     present = []

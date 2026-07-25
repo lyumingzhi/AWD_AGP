@@ -53,12 +53,27 @@ saved in the same directory. The WDNet quickstart remover is included under
 
 ## Google Drive Checkpoints
 
-Full-paper checkpoints are expected to come from a Google Drive package. Fill
-`configs/weights_manifest.json` with your Drive links, then users can run
-`python scripts/download_gdrive_weights.py` and validate with
-`python scripts/check_weights.py`. The code automatically searches the local
-`weights/` directory, or a custom `--weights_dir` / `AWD_AGP_WEIGHTS_DIR`. See
-`docs/GOOGLE_DRIVE_WEIGHTS.md`.
+Full-paper checkpoints are expected to come from a separate weights package.
+The prepared core archive is named `AWD_AGP_weights_core_20260725.tar.gz` and
+contains the expected `weights/` directory plus `README_DEPLOY_WEIGHTS.md`.
+After downloading it from the project Drive link, extract it from the repository
+root:
+
+```bash
+tar -xzf AWD_AGP_weights_core_20260725.tar.gz -C /path/to/AWD_AGP
+cd /path/to/AWD_AGP
+python scripts/check_weights.py --profile core
+```
+
+The core archive includes Generative Inpainting, GMCNN, EdgeConnect, MAT, FcF,
+CR-Fill, DBWE, SLBR, RFR-CelebA, and Superpixel FCN weights/configs. WDNet is
+already bundled for the quickstart under `third_party/inpainting/WDNet/`. The
+RFR Places2 checkpoint and the optional 23GB Mask RPN checkpoint directory are
+not included in the core archive; add them manually if you need those paper
+settings. The code also supports per-file Drive links through
+`configs/weights_manifest.json`, `scripts/download_gdrive_weights.py`, and a
+custom `--weights_dir` / `AWD_AGP_WEIGHTS_DIR`. See
+`docs/GOOGLE_DRIVE_WEIGHTS.md` and `WEIGHTS.md`.
 
 ## Main Usage
 
