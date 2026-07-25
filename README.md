@@ -9,21 +9,31 @@ This repository contains the core AWD-AGP attack code, model-adapter APIs, trans
 ## Paper Framework
 
 AWD-AGP protects a visibly watermarked image by optimizing a bounded adversarial
-perturbation around the watermark region. The protected image is then evaluated
-against two removal settings studied in the paper: inpainting-based watermark
-removers and blind watermark removers.
+perturbation on the watermarked image. The mask/location component and the
+attack component are separate parts of the pipeline: the superpixel-guided
+evolutionary search is used to produce pseudo-labels for Mask RPN training,
+while the trained Mask RPN can provide watermark-location proposals for the
+protection/evaluation workflow.
 
 ```mermaid
-flowchart LR
-    A[Clean image] --> B[Attach visible watermark]
-    B --> C[Select watermark mask/location]
-    C --> C1[Superpixel-guided evolutionary search]
-    C --> C2[Mask RPN proposal]
-    C1 --> D[AWD-AGP perturbation optimization]
-    C2 --> D
-    D --> E[Protected watermarked image]
-    E --> F[Inpainting-based removal evaluation]
-    E --> G[Blind watermark-removal evaluation]
+flowchart TB
+    subgraph Offline[Offline mask-location learning]
+        A[Clean training images] --> B[Superpixel maps]
+        B --> C[Evolutionary candidate-mask search]
+        C --> D[Scored box records: box_list / score_list]
+        D --> E[Train Mask RPN]
+    end
+
+    subgraph Online[AWD-AGP protection and evaluation]
+        F[Clean image] --> G[Mask RPN or provided mask/location]
+        G --> H[Attach visible watermark]
+        H --> I[AWD-AGP perturbation optimization on surrogate removers]
+        I --> J[Protected watermarked image]
+        J --> K[Inpainting-based remover evaluation]
+        J --> L[Blind watermark-remover evaluation]
+    end
+
+    E -. optional checkpoint .-> G
 ```
 
 The images `inpainting_based_removal.jpg` and `blind_watermark_removal.jpg` are
