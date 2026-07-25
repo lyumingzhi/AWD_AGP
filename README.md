@@ -35,6 +35,8 @@ pip install -r requirements.txt
 
 Then install or place the external model projects/checkpoints expected by the wrappers in `inpainting/AWD_AGP/source_models/`. Check `inpainting/AWD_AGP/official_load_models.py`, the corresponding file in `inpainting/AWD_AGP/source_models/`, and `WEIGHTS.md` when adapting paths.
 
+For a precise statement of what this release can reproduce, see `docs/REPRODUCIBILITY.md`.
+
 ## Quickstart Demo
 
 Before running the full paper setup, users can generate one protected
