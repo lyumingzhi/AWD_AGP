@@ -33,6 +33,7 @@ CORE_PROFILE_ENTRIES = [
     "dbwe_checkpoint",
     "slbr_checkpoint",
     "superpixel_checkpoint",
+    "mask_rpn_checkpoint",
 ]
 
 

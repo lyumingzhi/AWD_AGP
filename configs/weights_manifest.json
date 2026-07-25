@@ -163,6 +163,15 @@
         "superpixel mask-location search"
       ]
     },
+    "mask_rpn_checkpoint": {
+      "local_path": "weights/mask_RPN/checkpoints/fasterrcnn_02191254_0",
+      "env": "AWD_AGP_MASK_RPN_CKPT",
+      "gdrive_url": "",
+      "gdrive_file_id": "",
+      "required_for": [
+        "authors-provided Mask RPN watermark-location proposal model"
+      ]
+    },
     "mask_rpn_checkpoint_dir": {
       "local_path": "weights/mask_RPN/checkpoints",
       "env": "AWD_AGP_MASK_RPN_CKPT_DIR",

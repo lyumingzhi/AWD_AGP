@@ -17,7 +17,8 @@ Place or configure weights as follows. The canonical machine-readable list is `c
 | WDNet | `--wdnet_checkpoint` | `AWD_AGP_WDNET_CKPT` | `third_party/inpainting/WDNet/WDNet_G.pkl` | Bundled for quickstart; can be overridden. |
 | DBWE | `--dbwe_checkpoint` | `AWD_AGP_DBWE_CKPT` | `weights/DBWEModel/27kpng_model_best.pth.tar` | Blind watermark remover. |
 | SLBR | `--slbr_checkpoint` | `AWD_AGP_SLBR_CKPT` | `weights/SLBR/model_best.pth.tar` | Blind watermark remover. |
-| Mask RPN | n/a | `AWD_AGP_MASK_RPN_CKPT_DIR` | `weights/mask_RPN/checkpoints/` | Put proposal checkpoints here or pass the generated mask directory via `--RPNRefineMask`. |
+| Authors-provided Mask RPN | n/a | `AWD_AGP_MASK_RPN_CKPT` | `weights/mask_RPN/checkpoints/fasterrcnn_02191254_0` | Trained watermark-location proposal checkpoint used by the AWD-AGP demos/pipeline. |
+| Optional Mask RPN snapshot directory | n/a | `AWD_AGP_MASK_RPN_CKPT_DIR` | `weights/mask_RPN/checkpoints/` | Optional full training snapshot directory; not needed when the authors-provided checkpoint above is available. |
 | Superpixel FCN | function argument | `AWD_AGP_SUPERPIXEL_CKPT` | `weights/superpixel_fcn/pretrain_ckpt/SpixelNet_bsd_ckpt.tar` | Used by mask-location search. |
 
 Large weights should be released separately, for example through GitHub Releases, Google Drive, Hugging Face, or institutional storage.
