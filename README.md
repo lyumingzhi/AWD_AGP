@@ -70,7 +70,10 @@ CR-Fill, DBWE, SLBR, RFR-CelebA, and Superpixel FCN weights/configs. WDNet is
 already bundled for the quickstart under `third_party/inpainting/WDNet/`. The
 RFR Places2 checkpoint and the optional 23GB Mask RPN checkpoint directory are
 not included in the core archive; add them manually if you need those paper
-settings. The code also supports per-file Drive links through
+settings. If any released weight link becomes unavailable, please obtain the
+corresponding checkpoint from the original third-party repository whenever
+possible, or replace it with an equivalent checkpoint supported by the wrapper.
+The code also supports per-file Drive links through
 `configs/weights_manifest.json`, `scripts/download_gdrive_weights.py`, and a
 custom `--weights_dir` / `AWD_AGP_WEIGHTS_DIR`. See
 `docs/GOOGLE_DRIVE_WEIGHTS.md` and `WEIGHTS.md`.
