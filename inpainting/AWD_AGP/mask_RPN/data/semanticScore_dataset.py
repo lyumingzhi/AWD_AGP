@@ -113,18 +113,27 @@ class SemanticScore_Dataset:
 
         all_bbox_list = score_records['box_list'][::-1]
         all_score_list = score_records['score_list'][::-1]
+        seen_boxes = set()
         index = 0
-        while len(bbox)!=self.num_bbox:
-            if all_bbox_list[index] not in bbox:
+        while len(bbox) != self.num_bbox and index < len(all_bbox_list):
+            raw_box = tuple(all_bbox_list[index])
+            if raw_box not in seen_boxes:
+                seen_boxes.add(raw_box)
                 bbox.append((all_bbox_list[index][0], all_bbox_list[index][1], all_bbox_list[index][0]+int(img.shape[-2] * all_bbox_list[index][2]), all_bbox_list[index][1]+int(img.shape[-1] * all_bbox_list[index][3]))) # 'ymin', 'xmin', 'ymax', 'xmax'
 
                 label.append(all_score_list[index])
 
                 difficult.append(1)
+            index += 1
+
+        if len(bbox) < self.num_bbox:
+            raise ValueError(f'Not enough unique RPN boxes in {self.scores_files[i]}: expected {self.num_bbox}, got {len(bbox)}')
 
         for i in range(self.num_bbox):
             index = random.randint(len(all_bbox_list)//2, len(all_bbox_list)-1)
-            if all_bbox_list[index] not in bbox:
+            raw_box = tuple(all_bbox_list[index])
+            if raw_box not in seen_boxes:
+                seen_boxes.add(raw_box)
                 bbox.append((all_bbox_list[index][0], all_bbox_list[index][1], all_bbox_list[index][0]+int(img.shape[-2] * all_bbox_list[index][2]), all_bbox_list[index][1]+int(img.shape[-1] * all_bbox_list[index][3]))) # 'ymin', 'xmin', 'ymax', 'xmax'
 
                 label.append(all_score_list[index])
