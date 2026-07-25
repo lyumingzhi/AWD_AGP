@@ -9,35 +9,15 @@ This repository contains the core AWD-AGP attack code, model-adapter APIs, trans
 ## Paper Framework
 
 AWD-AGP protects a visibly watermarked image by optimizing a bounded adversarial
-perturbation on the watermarked image. The mask/location component and the
-attack component are separate parts of the pipeline: the superpixel-guided
-evolutionary search is used to produce pseudo-labels for Mask RPN training,
-while the trained Mask RPN can provide watermark-location proposals for the
-protection/evaluation workflow.
+perturbation on the watermarked image. The figure below is the framework figure
+from the paper.
 
-```mermaid
-flowchart TB
-    subgraph Offline[Offline mask-location learning]
-        A[Clean training images] --> B[Superpixel maps]
-        B --> C[Evolutionary candidate-mask search]
-        C --> D[Scored box records: box_list / score_list]
-        D --> E[Train Mask RPN]
-    end
-
-    subgraph Online[AWD-AGP protection and evaluation]
-        F[Clean image] --> G[Mask RPN or provided mask/location]
-        G --> H[Attach visible watermark]
-        H --> I[AWD-AGP perturbation optimization on surrogate removers]
-        I --> J[Protected watermarked image]
-        J --> K[Inpainting-based remover evaluation]
-        J --> L[Blind watermark-remover evaluation]
-    end
-
-    E -. optional checkpoint .-> G
-```
+<p align="center">
+  <img src="assets/paper_framework.png" alt="AWD-AGP paper framework" width="85%">
+</p>
 
 The images `inpainting_based_removal.jpg` and `blind_watermark_removal.jpg` are
-paper result-comparison figures, not the framework diagram.
+paper result-comparison figures.
 
 ## Repository Layout
 
