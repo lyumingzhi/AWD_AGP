@@ -40,11 +40,13 @@ From the repository root:
 conda activate ensemble
 
 python scripts/quickstart_wdnet_attack.py \
-  --input blind_watermark_removal.jpg \
   --output-dir quickstart_outputs/wdnet_demo \
   --steps 30 \
   --budget 0.03
 ```
+
+By default, the script generates a synthetic clean input image. To test your own
+image, add `--input /path/to/clean_image.jpg`.
 
 Expected outputs:
 

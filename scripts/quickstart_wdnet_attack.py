@@ -26,7 +26,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Generate and test a protected watermarked image with WDNet.")
-    parser.add_argument("--input", default="blind_watermark_removal.jpg", help="input image path")
+    parser.add_argument("--input", default="", help="optional clean input image path; if omitted, a synthetic demo image is generated")
     parser.add_argument("--output-dir", default="quickstart_outputs/wdnet_demo", help="directory for generated images")
     parser.add_argument("--external-inpainting-root", default=os.environ.get("AWD_AGP_EXTERNAL_INPAINTING_ROOT", ""), help="optional parent directory that contains third-party inpainting/WDNet; defaults to this repository third_party directory")
     parser.add_argument("--wdnet-checkpoint", default=os.environ.get("AWD_AGP_WDNET_CKPT", ""), help="path to WDNet_G.pkl")
@@ -76,8 +76,44 @@ def configure_external_imports(args):
     return WDnet, str(checkpoint)
 
 
+def make_demo_image(size):
+    x = np.linspace(0, 1, size, dtype="float32")
+    y = np.linspace(0, 1, size, dtype="float32")
+    xx, yy = np.meshgrid(x, y)
+    image = np.stack([
+        0.18 + 0.55 * xx,
+        0.25 + 0.45 * yy,
+        0.35 + 0.35 * (1 - xx) * (1 - yy),
+    ], axis=2)
+
+    canvas = Image.fromarray((np.clip(image, 0, 1) * 255).astype("uint8"), "RGB")
+    draw = ImageDraw.Draw(canvas, "RGBA")
+    draw.rectangle((0, int(size * 0.66), size, size), fill=(48, 64, 74, 180))
+    draw.ellipse((int(size * 0.08), int(size * 0.12), int(size * 0.38), int(size * 0.42)), fill=(238, 205, 109, 210))
+    draw.polygon(
+        [
+            (int(size * 0.18), int(size * 0.72)),
+            (int(size * 0.42), int(size * 0.44)),
+            (int(size * 0.68), int(size * 0.72)),
+        ],
+        fill=(74, 122, 92, 230),
+    )
+    draw.polygon(
+        [
+            (int(size * 0.46), int(size * 0.72)),
+            (int(size * 0.72), int(size * 0.38)),
+            (int(size * 0.94), int(size * 0.72)),
+        ],
+        fill=(86, 105, 132, 230),
+    )
+    return canvas
+
+
 def load_image(path, size, device):
-    image = Image.open(path).convert("RGB").resize((size, size), Image.BICUBIC)
+    if path:
+        image = Image.open(path).convert("RGB").resize((size, size), Image.BICUBIC)
+    else:
+        image = make_demo_image(size)
     array = np.asarray(image).astype("float32") / 255.0
     tensor = torch.from_numpy(array).permute(2, 0, 1).unsqueeze(0).to(device)
     return tensor

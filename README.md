@@ -43,13 +43,16 @@ watermarked image and test it with WDNet:
 ```bash
 conda activate ensemble
 
-python scripts/quickstart_wdnet_attack.py   --input blind_watermark_removal.jpg   --external-inpainting-root /path/to/parent-that-contains-inpainting   --wdnet-checkpoint /path/to/inpainting/WDNet/WDNet_G.pkl   --output-dir quickstart_outputs/wdnet_demo
+python scripts/quickstart_wdnet_attack.py \
+  --output-dir quickstart_outputs/wdnet_demo
 ```
 
-The protected adversarial example is written to
-`quickstart_outputs/wdnet_demo/02_protected.png`, and WDNet test outputs are
-saved in the same directory. The WDNet quickstart remover is included under
-`third_party/inpainting/WDNet`. See `docs/QUICKSTART_WDNET.md`.
+By default the script generates a small synthetic clean image for the smoke test.
+To use your own image, pass `--input /path/to/clean_image.jpg`. The protected
+adversarial example is written to `quickstart_outputs/wdnet_demo/02_protected.png`,
+and WDNet test outputs are saved in the same directory. The WDNet quickstart
+remover is included under `third_party/inpainting/WDNet`. See
+`docs/QUICKSTART_WDNET.md`.
 
 ## Google Drive Checkpoints
 
