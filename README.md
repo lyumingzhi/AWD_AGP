@@ -161,6 +161,12 @@ python -m inpainting.AWD_AGP.official_evaluate_for_wr \
 - Some backend wrappers still contain local checkpoint paths from the research environment. Treat those paths as templates and adapt them to your installation.
 - The repository intentionally does not vendor all third-party model code or checkpoints. See `WEIGHTS.md` for expected local checkpoint locations.
 
+## License
+
+The original AWD-AGP code is released under the Apache License 2.0. Third-party
+code, models, and checkpoints retain their original licenses and terms; see
+`THIRD_PARTY_NOTICES.md` for details.
+
 ## Citation
 
 ```bibtex
