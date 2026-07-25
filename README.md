@@ -18,7 +18,7 @@ This repository contains the core AWD-AGP attack code, model-adapter APIs, trans
 - `inpainting/AWD_AGP/official_load_models.py`: central model-loader for inpainting and watermark-removal wrappers.
 - `inpainting/AWD_AGP/official_utils.py`, `inpainting/AWD_AGP/official_noise_func.py`: shared utility and perturbation modules.
 - `inpainting/AWD_AGP/source_models/`: adapter APIs for RFR, GMCNN, EdgeConnect, CR-Fill, Generative Inpainting, FcF, MAT, WDNet, DBWE, and SLBR.
-- `inpainting/AWD_AGP/mask_RPN/`: Faster R-CNN based watermark-location proposal code; see `docs/TRAIN_MASK_RPN.md` to train your own checkpoint.
+- `inpainting/AWD_AGP/mask_RPN/`: Faster R-CNN based watermark-location proposal code; its training records are pseudo-labels produced by the superpixel-guided evolutionary search. See `docs/TRAIN_MASK_RPN.md` to train your own checkpoint.
 - `inpainting/AWD_AGP/superpixel_fcn/`: imported superpixel segmentation dependency used by the mask-location search pipeline.
 
 Compatibility wrappers `Attack.py`, `load_models.py`, and `utils.py` are kept for older scripts that imported the pre-extraction module names.
