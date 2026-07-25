@@ -13,18 +13,21 @@ perturbation around the watermark region. The protected image is then evaluated
 against two removal settings studied in the paper: inpainting-based watermark
 removers and blind watermark removers.
 
-```text
-clean image + visible watermark
-  -> mask/location selection with superpixel-guided search or Mask RPN
-  -> AWD-AGP perturbation optimization against surrogate remover models
-  -> protected watermarked image
-  -> transfer evaluation on inpainting-based and blind watermark removers
+```mermaid
+flowchart LR
+    A[Clean image] --> B[Attach visible watermark]
+    B --> C[Select watermark mask/location]
+    C --> C1[Superpixel-guided evolutionary search]
+    C --> C2[Mask RPN proposal]
+    C1 --> D[AWD-AGP perturbation optimization]
+    C2 --> D
+    D --> E[Protected watermarked image]
+    E --> F[Inpainting-based removal evaluation]
+    E --> G[Blind watermark-removal evaluation]
 ```
 
-<p align="center">
-  <img src="inpainting_based_removal.jpg" alt="AWD-AGP framework for inpainting-based watermark removal" width="48%">
-  <img src="blind_watermark_removal.jpg" alt="AWD-AGP framework for blind watermark removal" width="48%">
-</p>
+The images `inpainting_based_removal.jpg` and `blind_watermark_removal.jpg` are
+paper result-comparison figures, not the framework diagram.
 
 ## Repository Layout
 
