@@ -4,6 +4,15 @@
   "default_weights_root": "weights",
   "notes": "Fill gdrive_url or gdrive_file_id after uploading checkpoints to Google Drive.",
   "entries": {
+    "core_weights_archive": {
+      "local_path": "AWD_AGP_weights_core_20260725.tar.gz",
+      "gdrive_url": "https://drive.google.com/open?id=1DQUgsaqpd3LnP_MLe9YYhswRv3DsPBoL",
+      "gdrive_file_id": "1DQUgsaqpd3LnP_MLe9YYhswRv3DsPBoL",
+      "sha256": "57dd2f8aba072bc306468478d13b865b86c0a53aaa3fe937f125d204a0ceb7ac",
+      "required_for": [
+        "one-shot deployment of the core AWD-AGP weights package"
+      ]
+    },
     "rfr_places2_checkpoint": {
       "local_path": "weights/RFR/checkpoint_places2.pth",
       "cli_arg": "--rfr_places2_checkpoint",

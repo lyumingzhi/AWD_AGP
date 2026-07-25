@@ -54,10 +54,13 @@ saved in the same directory. The WDNet quickstart remover is included under
 ## Google Drive Checkpoints
 
 Full-paper checkpoints are expected to come from a separate weights package.
-The prepared core archive is named `AWD_AGP_weights_core_20260725.tar.gz` and
+Download the prepared core archive from
+[Google Drive](https://drive.google.com/open?id=1DQUgsaqpd3LnP_MLe9YYhswRv3DsPBoL).
+The archive is named `AWD_AGP_weights_core_20260725.tar.gz` (about 1.7 GB) and
 contains the expected `weights/` directory plus `README_DEPLOY_WEIGHTS.md`.
-After downloading it from the project Drive link, extract it from the repository
-root:
+Optional checksum:
+`57dd2f8aba072bc306468478d13b865b86c0a53aaa3fe937f125d204a0ceb7ac`. After
+downloading it, extract it from the repository root:
 
 ```bash
 tar -xzf AWD_AGP_weights_core_20260725.tar.gz -C /path/to/AWD_AGP
