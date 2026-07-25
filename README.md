@@ -6,6 +6,26 @@ Paper: [ACM MM 2023 PDF](https://dl.acm.org/doi/pdf/10.1145/3581783.3612034)
 
 This repository contains the core AWD-AGP attack code, model-adapter APIs, transfer-evaluation scripts, and the mask-location search components used in the paper. The third-party watermark-removal and inpainting models are referenced through lightweight wrappers in `source_models/`; users should install those projects and adapt checkpoints/paths locally.
 
+## Paper Framework
+
+AWD-AGP protects a visibly watermarked image by optimizing a bounded adversarial
+perturbation around the watermark region. The protected image is then evaluated
+against two removal settings studied in the paper: inpainting-based watermark
+removers and blind watermark removers.
+
+```text
+clean image + visible watermark
+  -> mask/location selection with superpixel-guided search or Mask RPN
+  -> AWD-AGP perturbation optimization against surrogate remover models
+  -> protected watermarked image
+  -> transfer evaluation on inpainting-based and blind watermark removers
+```
+
+<p align="center">
+  <img src="inpainting_based_removal.jpg" alt="AWD-AGP framework for inpainting-based watermark removal" width="48%">
+  <img src="blind_watermark_removal.jpg" alt="AWD-AGP framework for blind watermark removal" width="48%">
+</p>
+
 ## Repository Layout
 
 - `inpainting/AWD_AGP/official_surrogate_generate_AE.py`: generate transferable adversarial examples with AWD-AGP.
